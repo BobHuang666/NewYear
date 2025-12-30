@@ -1,0 +1,82 @@
+.app {
+  height: 100vh;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #f5f5f0 0%, #f0f0eb 50%, #ebebe6 100%);
+  padding: 0 20px 114px;
+  position: relative;
+  overflow: hidden;
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: url('/背景图.png') no-repeat center center;
+  background-size: contain;
+  filter: blur(2px);
+  opacity: 0.9;
+  z-index: 0;
+}
+
+.app::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background:
+    url('/背景图.png') no-repeat 0% bottom,
+    url('/背景图.png') no-repeat 100% bottom;
+  background-size:
+    50% 100%,
+    50% 100%;
+  filter: blur(12px);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tickets-container {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 小屏幕竖屏时强制横屏显示 */
+@media (max-width: 768px) and (orientation: portrait) {
+  .app {
+    transform: rotate(90deg);
+    transform-origin: center center;
+    width: 100vh;
+    height: 100vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50vh;
+    margin-top: -50vw;
+    overflow: hidden;
+  }
+
+  html,
+  body {
+    width: 100vh;
+    height: 100vw;
+    overflow: hidden;
+    position: fixed;
+  }
+
+  #root {
+    width: 100vh;
+    height: 100vw;
+  }
+}

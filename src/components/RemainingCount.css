@@ -1,0 +1,48 @@
+.remaining-count {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.remaining-label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  font-family: 'Arial', sans-serif;
+}
+
+.remaining-label-cn {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.remaining-number {
+  font-size: 32px;
+  font-weight: bold;
+  color: #dc2626;
+  line-height: 1;
+  font-family: 'Arial', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .remaining-count {
+    top: 10px;
+    left: 10px;
+    padding: 12px 16px;
+  }
+
+  .remaining-number {
+    font-size: 24px;
+  }
+}
+
