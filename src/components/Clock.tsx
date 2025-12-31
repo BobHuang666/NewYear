@@ -20,4 +20,3 @@ export const Clock = () => {
     </div>
   )
 }
-

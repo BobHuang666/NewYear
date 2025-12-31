@@ -8,11 +8,12 @@ interface ModalProps {
 export const Modal = ({ content, onClose }: ModalProps) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>
+          ×
+        </button>
         <div className="modal-text">{content}</div>
       </div>
     </div>
   )
 }
-

@@ -20,4 +20,3 @@ export const markTicketAsOpened = (id: number): void => {
 export const isTicketOpened = (id: number): boolean => {
   return getOpenedTickets().has(id)
 }
-
