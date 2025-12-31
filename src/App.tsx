@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FORTUNE_TICKETS } from './types'
 import { FortuneTicket } from './components/FortuneTicket'
 import { Modal } from './components/Modal'
@@ -10,6 +10,18 @@ import './App.css'
 function App() {
   const [openedTickets, setOpenedTickets] = useState<Set<number>>(() => getOpenedTickets())
   const [modalContent, setModalContent] = useState<string | null>(null)
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 768)
+    }
+
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   const handleTicketOpen = (id: number, content: string) => {
     const targetTime = new Date(FORTUNE_TICKETS[id - 1].time).getTime()
@@ -33,6 +45,12 @@ function App() {
     return currentTime >= targetTime && !openedTickets.has(ticket.id)
   }).length
 
+  // 不按时间排序，使用固定的随机顺序（按 id 的特定排列）
+  const displayOrder = [3, 7, 1, 9, 5, 2, 8, 4, 10, 6]
+  const sortedTickets = [...FORTUNE_TICKETS].sort((a, b) => {
+    return displayOrder.indexOf(a.id) - displayOrder.indexOf(b.id)
+  })
+
   // 两行五列布局，统一倾斜度
   const ticketPositions = [
     // 第一行 - 从顶部开始
@@ -41,12 +59,12 @@ function App() {
     { top: '-10%', left: '42%' },
     { top: '-10%', left: '58%' },
     { top: '-10%', left: '74%' },
-    // 第二行
-    { top: '55%', left: '10%' },
-    { top: '55%', left: '26%' },
-    { top: '55%', left: '42%' },
-    { top: '55%', left: '58%' },
-    { top: '55%', left: '74%' }
+    // 第二行 - 小屏幕下使用 64%
+    { top: isSmallScreen ? '64%' : '55%', left: '10%' },
+    { top: isSmallScreen ? '64%' : '55%', left: '26%' },
+    { top: isSmallScreen ? '64%' : '55%', left: '42%' },
+    { top: isSmallScreen ? '64%' : '55%', left: '58%' },
+    { top: isSmallScreen ? '64%' : '55%', left: '74%' }
   ]
 
   // 统一倾斜度：所有票都旋转30度（顺时针）
@@ -56,7 +74,7 @@ function App() {
     <div className="app">
       <RemainingCount remaining={availableTickets} total={FORTUNE_TICKETS.length} />
       <div className="tickets-container">
-        {FORTUNE_TICKETS.map((ticket, index) => (
+        {sortedTickets.map((ticket, index) => (
           <FortuneTicket
             key={ticket.id}
             id={ticket.id}
