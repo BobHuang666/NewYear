@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { FORTUNE_TICKETS } from './types'
 import { FortuneTicket } from './components/FortuneTicket'
 import { Modal } from './components/Modal'
@@ -8,12 +8,8 @@ import { getOpenedTickets, markTicketAsOpened } from './utils/storage'
 import './App.css'
 
 function App() {
-  const [openedTickets, setOpenedTickets] = useState<Set<number>>(new Set())
+  const [openedTickets, setOpenedTickets] = useState<Set<number>>(() => getOpenedTickets())
   const [modalContent, setModalContent] = useState<string | null>(null)
-
-  useEffect(() => {
-    setOpenedTickets(getOpenedTickets())
-  }, [])
 
   const handleTicketOpen = (id: number, content: string) => {
     const targetTime = new Date(FORTUNE_TICKETS[id - 1].time).getTime()
